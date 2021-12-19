@@ -45,7 +45,7 @@ const controller = {
 			discount : +discount,
 			category,
 			description,
-			image : 'default-image.png' 
+			image : req.file ? req.file.filename : 'default-image.png'
 
 		}
 		products.push(product) //al array de products se le pushea el nuevo product
@@ -60,6 +60,7 @@ const controller = {
 	edit: (req, res) => {
 		let product = products.find(product => product.id === +req.params.id); //va a devolver el producto que tenga el id que pasa por parametro
 		return res.render('product-edit-form',{ //renderizo el form y mando el producto
+			products,
 			product
 		})
 	},  
@@ -80,7 +81,7 @@ const controller = {
 			}	
 		})
 		fs.writeFileSync(productsFilePath,JSON.stringify(products,null,2),'utf-8'); //para escribir el json
-		res.redirect('/products')
+		res.redirect('/products');
 	},
 
     //UPDATE usando forEach

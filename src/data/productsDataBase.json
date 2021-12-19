@@ -151,5 +151,14 @@
     "category": "in-sale",
     "description": "ddddd",
     "image": "default-image.png"
+  },
+  {
+    "id": 21,
+    "name": "Celular Motorola",
+    "price": 50000,
+    "discount": 10,
+    "category": "in-sale",
+    "description": "El ultimo modelo de Motorola- ",
+    "image": "img-1639946945724.jpg"
   }
 ]

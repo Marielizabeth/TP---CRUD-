@@ -1,6 +1,22 @@
 // ************ Require's ************
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+const multer = require('multer');
+
+// ************ Multer ************
+const storage = multer.diskStorage({
+    destination: (req,file,callback) => {
+        callback(null,'./public/images/products');
+    },
+    filename: (req,file,callback) => {
+        callback(null,`img-${Date.now()}${path.extname(file.originalname)}`);
+    }
+});
+
+const uploadFile = multer({storage});
+
+
 
 // ************ Controller Require ************
 const productsController = require('../controllers/productsController');
@@ -12,7 +28,7 @@ router.get('/', productsController.index);
 /*** CREATE ONE PRODUCT ***/ 
 router.get('/create/', productsController.create); 
 //para cargar la vista del formulario. siempre va por get
-router.post('/create/', productsController.store); 
+router.post('/create', uploadFile.single('image'), productsController.store);
 //cuando recibo la informacion sensible, el formulario recibe la información y la envia al servidor, usa la misma ruta /products/create pero a traves del metodo post.
 //EN APP.JS LA RUTA YA ACLARA /PRODUCTS POR ESO SE COLOCA SOLO /CREATE.
 //buena practica: la ruta que va por post lleva el mismo nombre: create
